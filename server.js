@@ -1,30 +1,26 @@
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// test route
-app.get("/test", (req, res) => {
-  res.send("TEST OK");
-});
-
-// home
+// health check
 app.get("/", (req, res) => {
   res.send("Backend running");
 });
 
-// static uploads
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.get("/test", (req, res) => {
+  res.send("TEST OK");
+});
 
-// routes
-app.use("/admin", require("./routes/admin"));
-app.use("/files", require("./routes/files"));
+// TEMP: only files API (no uploads)
+app.get("/files", (req, res) => {
+  res.json([]);
+});
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
