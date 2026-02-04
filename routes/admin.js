@@ -25,7 +25,10 @@ router.post("/upload", upload.single("pdf"), (req, res) => {
     return res.status(401).send("Wrong admin password");
   }
 
-  const data = JSON.parse(fs.readFileSync("data/files.json"));
+  const path = require("path");
+const filePath = path.join(__dirname, "..", "data", "files.json");
+const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+
 
   data.push({
     branch: req.body.branch,
